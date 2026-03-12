@@ -6,12 +6,6 @@ import { RandomWikiFacts } from './RandomWikiFacts.tsx'
 import { GetMeme } from './GetMeme.tsx'
 
 function App() {
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ]
-
   const audio = new Audio('../sounds/fah.mp3')
 
   const { data, isPending, isError, error, refetch } = useQuery({
