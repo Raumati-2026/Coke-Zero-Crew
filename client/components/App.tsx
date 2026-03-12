@@ -1,7 +1,9 @@
-import { getAdvice } from '../apiClient.ts'
 import { useQuery } from '@tanstack/react-query'
+import { getAdvice } from '../apiClient.ts'
 import Public from './Public'
 import CustomSelect from './CustomSelect'
+import { RandomWikiFacts } from './RandomWikiFacts.tsx'
+import { GetMeme } from './GetMeme.tsx'
 
 function App() {
   const options = [
@@ -10,12 +12,6 @@ function App() {
     { value: 'vanilla', label: 'Vanilla' },
   ]
 
-  const audio = new Audio('../sounds/fah.mp3')
-
-import { RandomWikiFacts } from './RandomWikiFacts.tsx'
-import { GetMeme } from './GetMeme.tsx'
-
-function App() {
   const audio = new Audio('../sounds/fah.mp3')
 
   const { data, isPending, isError, error, refetch } = useQuery({
@@ -28,19 +24,26 @@ function App() {
     audio.play()
   }
 
+  const handleSelect = (option: { label: string; value: string | number }) => {
+    console.log('Selected:', option)
+  }
+
   if (isPending) return <p>loading...</p>
   if (isError) return <p>error: {error.message}</p>
-
-  console.log(data)
 
   return (
     <div>
       <h1>Random Advice Generator</h1>
-      <p>{data.slip.advice}</p>
+      <p>{data?.slip?.advice}</p>
       <button onClick={handleRefetch}>FAHHHH</button>
+      <hr />
       <Public />
-      <CustomSelect options={options} />
+      <hr />
+      <h3>Example Select:</h3>
+      <CustomSelect options={options} onSelect={handleSelect} />
+      <hr />
       <RandomWikiFacts />
+      <hr />
       <GetMeme />
     </div>
   )

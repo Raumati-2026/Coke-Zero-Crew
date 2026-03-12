@@ -7,12 +7,17 @@ interface Option {
 
 interface Props {
   options: Option[]
+  onSelect: (option: Option) => void
+  placeholder?: string
 }
 
-export default function CustomSelect({ options }: Props) {
+export default function CustomSelect({
+  options,
+  onSelect,
+  placeholder = 'Select an option',
+}: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
 
   const filteredOptions = options.filter((option) =>
@@ -28,20 +33,24 @@ export default function CustomSelect({ options }: Props) {
     setSelectedOption(option)
     setIsOpen(false) // Close dropdown
     setSearchTerm(option.label) // Update input value to selected option
+    onSelect(option) // Notify parent of selection
   }
 
   return (
-    <div className="custom-select">
+    <div
+      className="custom-select"
+      style={{ position: 'relative', width: '250px' }}
+    >
       <input
         type="text"
         value={searchTerm}
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}
-        onBlur={() => setTimeout(() => setIsOpen(false), 150)} // Delay closing the dropdown to allow click events to fire
-        placeholder="Select an option"
+        onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+        placeholder={placeholder}
       />
       {isOpen && (
-        <ul className="select-dropdown">
+        <ul>
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option) => (
               <li key={option.value} onClick={() => handleOptionClick(option)}>
