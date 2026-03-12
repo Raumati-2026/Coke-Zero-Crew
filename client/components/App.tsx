@@ -1,5 +1,6 @@
 import { getAdvice } from '../apiClient.ts'
 import { useQuery } from '@tanstack/react-query'
+import { RandomWikiFacts } from './RandomWikiFacts.tsx';
 
 function App(){
   const audio = new Audio('../sounds/fah.mp3');
@@ -24,6 +25,7 @@ function App(){
       <h1>Random Advice Generator</h1>
       <p>{data.slip.advice}</p>
       <button onClick={handleRefetch} >FAHHHH</button>
+      <RandomWikiFacts />
     </div>
   )
 }
