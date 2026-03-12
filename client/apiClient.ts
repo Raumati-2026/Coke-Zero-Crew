@@ -26,6 +26,9 @@ export async function getCountry(countryName: string, year: string) {
     `https://date.nager.at/api/v3/PublicHolidays/${year}/${country.countryCode}`,
   )
 
+  return response.body
+}
+
 export async function getWikiFact() {
   const response = await request.get(`${rootURL}/wikifact`)
   return response.body as WikiFacts
