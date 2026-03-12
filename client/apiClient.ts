@@ -13,3 +13,8 @@ export async function getWikiFact() {
   const response = await request.get(`${rootURL}/wikifact`)
   return response.body as WikiFacts
 }
+
+export async function getMeme() {
+  const response = await request.get(`${rootURL}/meme`)
+  return response.body
+}

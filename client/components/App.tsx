@@ -1,31 +1,33 @@
 import { getAdvice } from '../apiClient.ts'
 import { useQuery } from '@tanstack/react-query'
-import { RandomWikiFacts } from './RandomWikiFacts.tsx';
+import { RandomWikiFacts } from './RandomWikiFacts.tsx'
+import { GetMeme } from './GetMeme.tsx'
 
-function App(){
-  const audio = new Audio('../sounds/fah.mp3');
+function App() {
+  const audio = new Audio('../sounds/fah.mp3')
 
-  const {data, isPending, isError, error, refetch} = useQuery({
+  const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ['advice'],
     queryFn: getAdvice,
   })
 
   const handleRefetch = () => {
     refetch()
-    audio.play();
+    audio.play()
   }
 
-  if(isPending) return <p>loading...</p>
-  if(isError) return <p>error: {error.message}</p>
+  if (isPending) return <p>loading...</p>
+  if (isError) return <p>error: {error.message}</p>
 
   console.log(data)
 
-  return(
+  return (
     <div>
       <h1>Random Advice Generator</h1>
       <p>{data.slip.advice}</p>
-      <button onClick={handleRefetch} >FAHHHH</button>
+      <button onClick={handleRefetch}>FAHHHH</button>
       <RandomWikiFacts />
+      <GetMeme />
     </div>
   )
 }
