@@ -9,6 +9,23 @@ export async function getAdvice() {
   return thing
 }
 
+export async function getCountry(countryName: string, year: string) {
+  const availableCountries = await request.get(
+    'https://date.nager.at/api/v3/AvailableCountries',
+  )
+
+  const country = availableCountries.body.find(
+    (element: any) => element.name === countryName,
+  )
+
+  if (!country) {
+    throw new Error(`Country "${countryName}" not found`)
+  }
+
+  const response = await request.get(
+    `https://date.nager.at/api/v3/PublicHolidays/${year}/${country.countryCode}`,
+  )
+
 export async function getWikiFact() {
   const response = await request.get(`${rootURL}/wikifact`)
   return response.body as WikiFacts
