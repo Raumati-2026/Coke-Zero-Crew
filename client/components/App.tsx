@@ -1,29 +1,30 @@
-import { useState } from 'react'
-import { getGreeting } from '../apiClient.ts'
+import { getAdvice } from '../apiClient.ts'
 import { useQuery } from '@tanstack/react-query'
 
-const App = () => {
-  const [count, setCount] = useState(0)
+function App(){
+  const audio = new Audio('../sounds/fah.mp3');
 
-  const {
-    data: greeting,
-    isError,
-    isPending,
-  } = useQuery({ queryKey: ['greeting', count], queryFn: getGreeting })
+  const {data, isPending, isError, error, refetch} = useQuery({
+    queryKey: ['advice'],
+    queryFn: getAdvice,
+  })
 
-  if (isPending) return <p>Loading...</p>
+  const handleRefetch = () => {
+    refetch()
+    audio.play();
+  }
 
-  return (
-    <>
-      {count}
-      <h1>{greeting}</h1>
-      {isError && (
-        <p style={{ color: 'red' }}>
-          There was an error retrieving the greeting.
-        </p>
-      )}
-      <button onClick={() => setCount(count + 1)}>Click</button>
-    </>
+  if(isPending) return <p>loading...</p>
+  if(isError) return <p>error: {error.message}</p>
+
+  console.log(data)
+
+  return(
+    <div>
+      <h1>Random Advice Generator</h1>
+      <p>{data.slip.advice}</p>
+      <button onClick={handleRefetch} >FAHHHH</button>
+    </div>
   )
 }
 
