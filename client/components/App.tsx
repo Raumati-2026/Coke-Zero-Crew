@@ -2,16 +2,6 @@ import { getAdvice } from '../apiClient.ts'
 import { useQuery } from '@tanstack/react-query'
 import Public from './Public'
 import CustomSelect from './CustomSelect'
-
-function App() {
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ]
-
-  const audio = new Audio('../sounds/fah.mp3')
-
 import { RandomWikiFacts } from './RandomWikiFacts.tsx'
 import { GetMeme } from './GetMeme.tsx'
 
@@ -39,7 +29,7 @@ function App() {
       <p>{data.slip.advice}</p>
       <button onClick={handleRefetch}>FAHHHH</button>
       <Public />
-      <CustomSelect options={options} />
+      {/* <CustomSelect options={options} /> */}
       <RandomWikiFacts />
       <GetMeme />
     </div>
