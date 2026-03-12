@@ -3,6 +3,7 @@ import express from 'express'
 import cors, { CorsOptions } from 'cors'
 
 import randomWiki from './routes/randomWiki.ts'
+import publicHoliday from './routes/publicHolidays.ts'
 
 const server = express()
 
@@ -25,5 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 server.use('/api/v1/wikifact', randomWiki)
+
+server.use('/api/v1/public-holidays', publicHoliday)
 
 export default server
