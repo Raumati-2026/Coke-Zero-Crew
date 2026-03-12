@@ -12,6 +12,12 @@ function App() {
 
   const audio = new Audio('../sounds/fah.mp3')
 
+import { RandomWikiFacts } from './RandomWikiFacts.tsx'
+import { GetMeme } from './GetMeme.tsx'
+
+function App() {
+  const audio = new Audio('../sounds/fah.mp3')
+
   const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ['advice'],
     queryFn: getAdvice,
@@ -34,6 +40,8 @@ function App() {
       <button onClick={handleRefetch}>FAHHHH</button>
       <Public />
       <CustomSelect options={options} />
+      <RandomWikiFacts />
+      <GetMeme />
     </div>
   )
 }
