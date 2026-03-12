@@ -1,6 +1,7 @@
 import { getAdvice } from '../apiClient.ts'
 import { useQuery } from '@tanstack/react-query'
 import { RandomWikiFacts } from './RandomWikiFacts.tsx'
+import { GetMeme } from './GetMeme.tsx'
 
 function App() {
   const audio = new Audio('../sounds/fah.mp3')
@@ -26,6 +27,7 @@ function App() {
       <p>{data.slip.advice}</p>
       <button onClick={handleRefetch}>FAHHHH</button>
       <RandomWikiFacts />
+      <GetMeme />
     </div>
   )
 }

@@ -4,6 +4,7 @@ import cors, { CorsOptions } from 'cors'
 
 import randomWiki from './routes/randomWiki.ts'
 import publicHoliday from './routes/publicHolidays.ts'
+import getMeme from './routes/getMeme.ts'
 
 const server = express()
 
@@ -25,6 +26,7 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
+server.use('/api/v1/meme', getMeme)
 server.use('/api/v1/wikifact', randomWiki)
 
 server.use('/api/v1/public-holidays', publicHoliday)
