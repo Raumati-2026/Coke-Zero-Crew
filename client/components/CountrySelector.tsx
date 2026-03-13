@@ -1,26 +1,30 @@
 import { useState, ChangeEvent } from 'react'
+import { getAvailableCountries } from '../apiClient'
+import { useQuery } from '@tanstack/react-query'
 
-interface Option {
-  label: string
-  value: string | number
-}
-
-interface Props {
-  options: Option[]
-  onSelect: (option: Option) => void
-  placeholder?: string
-}
-
-export default function CustomSelect({
-  options,
+export default function CountrySelector({
   onSelect,
   placeholder = 'Select an option',
-}: Props) {
+}) {
   const [isOpen, setIsOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null)
+  const [selectedOption, setSelectedOption] = useState(null)
 
-  const filteredOptions = options.filter((option) =>
+  // Query for available countries
+  const countriesQuery = useQuery({
+    queryKey: ['countries'],
+    queryFn: () => getAvailableCountries(),
+  })
+  if (countriesQuery.isPending) return <p>Loading countries...</p>
+  if (countriesQuery.isError)
+    return <p>Error loading countries: {countriesQuery.error.message}</p>
+
+  const countryOptions = countriesQuery.data.map((c) => ({
+    label: c.name,
+    value: c.countryCode,
+  }))
+
+  const filteredOptions = countryOptions.filter((option) =>
     option.label.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
@@ -29,7 +33,7 @@ export default function CustomSelect({
     setIsOpen(true) // Open dropdown to show filtered results
   }
 
-  const handleOptionClick = (option: Option) => {
+  const handleOptionClick = (option) => {
     setSelectedOption(option)
     setIsOpen(false) // Close dropdown
     setSearchTerm(option.label) // Update input value to selected option
