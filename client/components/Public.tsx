@@ -1,48 +1,30 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getCountry, getAvailableCountries } from '../apiClient'
-import CustomSelect from './CustomSelect'
+import { getCountry } from '../apiClient'
+import CountrySelector from './CountrySelector'
 
 export default function Public() {
   const [selectedCountry, setSelectedCountry] = useState({
-    label: 'Austria',
-    value: 'AT',
+    label: 'New Zealand',
+    value: 'NZ',
   })
   const [year, setYear] = useState('2026')
 
-  // Query for available countries
-  const countriesQuery = useQuery({
-    queryKey: ['countries'],
-    queryFn: () => getAvailableCountries(),
-  })
-
-  // Query for holidays
   const holidaysQuery = useQuery({
     queryKey: ['holidays', selectedCountry.value, year],
     queryFn: () => getCountry(selectedCountry.value, year),
   })
 
-  const handleCountrySelect = (option: { label; value }) => {
+  const handleCountrySelect = (selectedOption) => {
     setSelectedCountry({
-      label: option.label,
-      value: option.value,
+      label: selectedOption.label,
+      value: selectedOption.value,
     })
   }
 
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setYear(e.target.value)
   }
-
-  if (countriesQuery.isPending) return <p>Loading countries...</p>
-  if (countriesQuery.isError)
-    return <p>Error loading countries: {countriesQuery.error.message}</p>
-
-  const countryOptions = countriesQuery.data.map(
-    (c: { name; countryCode }) => ({
-      label: c.name,
-      value: c.countryCode,
-    }),
-  )
 
   return (
     <div>
@@ -51,8 +33,7 @@ export default function Public() {
       <div>
         <div>
           <label>Country:</label>
-          <CustomSelect
-            options={countryOptions}
+          <CountrySelector
             onSelect={handleCountrySelect}
             placeholder="Select a country"
           />
