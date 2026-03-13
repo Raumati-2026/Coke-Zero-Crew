@@ -15,7 +15,7 @@ export default function Public() {
     queryFn: () => getCountry(selectedCountry.value, year),
   })
 
-  const handleCountrySelect = (selectedOption) => {
+  const handleCountrySelect = (selectedOption:{label:string, value:string}) => {
     setSelectedCountry({
       label: selectedOption.label,
       value: selectedOption.value,
