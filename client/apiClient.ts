@@ -9,7 +9,7 @@ export async function getAdvice() {
   return thing
 }
 
-export async function getCountry(countryCode, year) {
+export async function getCountry(countryCode: string, year: string) {
   const response = await request.get(
     `https://date.nager.at/api/v3/PublicHolidays/${year}/${countryCode}`,
   )
