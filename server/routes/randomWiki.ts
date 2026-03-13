@@ -16,11 +16,11 @@ router.get('/', async (req, res) => {
     if (err instanceof Error) {
       res.status(500).json({
         error: 'Failed to fetch random Wiki fact',
-        details: err.message
+        details: err.message,
       })
     } else {
       res.status(500).json({
-        error: 'Something went wrong while fetching random Wiki fact'
+        error: 'Something went wrong while fetching random Wiki fact',
       })
     }
   }

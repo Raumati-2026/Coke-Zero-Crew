@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
     "express": "^4.22.1",
     "superagent": "^10.2.2"
   },

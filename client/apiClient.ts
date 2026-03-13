@@ -1,5 +1,6 @@
 import request from 'superagent'
 import { WikiFacts } from './models/WikiFacts'
+import { RandomPhotoUnsplash } from './models/RandomPhotoUnsplash'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
 
@@ -8,6 +9,8 @@ export async function getAdvice() {
   const thing = JSON.parse(response.text)
   return thing
 }
+
+export async function getRandomUnsplash() {}
 
 export async function getCountry(countryName: string, year: string) {
   const availableCountries = await request.get(
